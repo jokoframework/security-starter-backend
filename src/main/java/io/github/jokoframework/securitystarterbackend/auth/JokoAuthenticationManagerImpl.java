@@ -6,17 +6,20 @@ import io.github.jokoframework.security.dto.request.AuditSessionRequestDTO;
 import io.github.jokoframework.security.dto.request.PrincipalSessionRequestDTO;
 import io.github.jokoframework.security.services.IAuditSessionService;
 import io.github.jokoframework.securitystarterbackend.constants.ApiConstants;
-import io.github.jokoframework.securitystarterbackend.dto.response.UserResponseDTO;
 import io.github.jokoframework.securitystarterbackend.entities.UserEntity;
 import io.github.jokoframework.securitystarterbackend.services.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
+
 
 import java.util.Date;
 
 @Component
 public class JokoAuthenticationManagerImpl implements JokoAuthenticationManager {
+    private static final Logger LOGGER = LoggerFactory.getLogger(JokoAuthenticationManagerImpl.class);
     @Autowired
     private IAuditSessionService auditSessionService;
 
@@ -28,12 +31,14 @@ public class JokoAuthenticationManagerImpl implements JokoAuthenticationManager 
     public JokoAuthentication authenticate(JokoAuthentication authentication)
             throws AuthenticationException{
         try {
+            LOGGER.info("Objeto recibido para la autenticación: " + authentication);
             UserEntity user = userService.validateUser(authentication.getUsername(), authentication.getPassword());
             authentication.setAuthenticated(true);
             auditPrincipalSession(authentication, user);
             return authentication;
-        } catch (Exception err) {
-            throw new RuntimeException(err);
+        } catch (Exception error) {
+            LOGGER.error(error.getMessage(), error);
+            throw new RuntimeException(error);
         }
     }
 

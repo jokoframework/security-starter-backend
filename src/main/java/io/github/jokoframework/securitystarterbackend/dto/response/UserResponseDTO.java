@@ -2,14 +2,16 @@ package io.github.jokoframework.securitystarterbackend.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.github.jokoframework.common.dto.JokoBaseResponse;
 import io.github.jokoframework.securitystarterbackend.constants.StatusEnum;
 
 import java.util.Date;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserResponseDTO {
+public class UserResponseDTO extends JokoBaseResponse {
 
-    //TODO HACE FALTA AGG ID?
+    @JsonProperty
+    private Long userId;
     @JsonProperty
     private String username;
     @JsonProperty
@@ -59,5 +61,13 @@ public class UserResponseDTO {
 
     public void setStatus(StatusEnum status) {
         this.status = status;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

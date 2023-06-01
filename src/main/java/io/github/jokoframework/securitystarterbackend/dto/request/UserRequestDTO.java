@@ -29,4 +29,13 @@ public class UserRequestDTO {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "UserRequestDTO{" +
+                "username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +  //TODO CIFRAR EL PASS
+                '}';
+    }
 }

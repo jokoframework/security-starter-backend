@@ -17,18 +17,25 @@ public class UserUtils {
             }
         }
     }
-    //TODO VALIDAR SI PASS CONTIENE COMBINACIÓN DE LETRAS Y NUMEROS
+
     public static void validatePassword(String pass) throws UserException {
         if (isEmptyString(pass)) {
             throw new UserException(ApiConstants.USER_INVALID, "La contraseña es obligatoria");
-        }else{
-            if(pass.length() < ApiConstants.MIN_LENGTH_PASS){
-                throw new UserException(ApiConstants.USER_INVALID,
-                        String.format("La contraseña debe contener al menos %d caracteres" , ApiConstants.MIN_LENGTH_PASS));
-            }
+        }
+        if(pass.length() < ApiConstants.MIN_LENGTH_PASS){
+            throw new UserException(ApiConstants.USER_INVALID,
+                    String.format("La contraseña debe contener al menos %d caracteres" , ApiConstants.MIN_LENGTH_PASS));
+        }
+        if(!isValidPassword(pass)){
+            throw new UserException(ApiConstants.USER_INVALID,
+                    "La contraseña debe contener una combinación de números y letras (mayúsculas y minúsculas)");
         }
     }
 
+    public static boolean isValidPassword(String pass){
+        final String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[\\d@\\-_#&*$])[A-Za-z\\d@\\-_#&*$]+$";
+        return pass.matches(regex);
+    }
     public static boolean isValidEmail(String email) {
         final String EMAIL_PATTERN = "^\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*(\\.\\w{2,3})+$";
         Pattern pattern = Pattern.compile(EMAIL_PATTERN);

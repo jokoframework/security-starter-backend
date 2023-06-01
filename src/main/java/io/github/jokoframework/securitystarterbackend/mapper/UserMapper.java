@@ -18,6 +18,7 @@ public class UserMapper {
 
     public static UserResponseDTO toResponseDTO(UserEntity entity) {
         UserResponseDTO responseDTO = new UserResponseDTO();
+        responseDTO.setUserId(entity.getUserId());
         responseDTO.setUsername(entity.getUsername());
         responseDTO.setEmail(entity.getEmail());
         responseDTO.setStatus(entity.getStatus());
