@@ -30,7 +30,7 @@ un secreto la primera vez que se levanta.
 - Clona este repositorio en tu máquina local.
 - Navega hasta el directorio del proyecto: cd security-starter-backend
 - Abre una ventana de terminal o línea de comandos en la raíz de tu proyecto.
-- Ejecuta el siguiente comando para compilar y construir el proyecto con el siguiente comando: 
+- Ejecuta el siguiente comando para compilar y construir el proyecto: 
 
 `gradle build`
 
@@ -38,7 +38,7 @@ Esto descargará todas las dependencias, compilará tu código y generará un ar
 
 - Una vez que la compilación haya finalizado con éxito, puedes ejecutar el proyecto con el siguiente comando: 
 
-`java -jar build/libs/nombre-del-archivo-generado.jar`
+`java -jar build/libs/nombre-del-proyecto.jar`
 # APIs proveídas
 * /api/status
 * /api/login
