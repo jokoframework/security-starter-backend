@@ -8,7 +8,16 @@ El proyecto utiliza el siguiente stack tecnológico:
 - Kotlin Gradle
 # Configuración
 ## Base de Datos
-En la carpeta **/src/main/resources/** se encuentra el dump (joko-db.sql) de la base de datos que contiene los scripts para la creación de las tablas que utiliza el proyecto. Además en esta carpeta encontrarás el archivo application.properties donde podrás configurar la base de datos a utilizar junto con sus propiedades.
+En la carpeta **/src/main/resources/** se encuentra el dump (joko-db.sql) de la base de datos que contiene los scripts para la creación de las tablas que utiliza el proyecto. Además en esta carpeta encontrarás el archivo application.properties donde podrás configurar la base de datos a utilizar junto con sus propiedades. 
+
+Para restaurar la base de datos ejecuta el siguiente comando:
+
+`psql -U <usuario> -d <nombre_base_datos> -f <ruta_archivo_sql>`
+
+Obs: Reemplaza <usuario> con el nombre de usuario de PostgreSQL, <nombre_base_datos> con el nombre de la base de datos que deseas restaurar y <ruta_archivo_sql> con la ruta completa al archivo SQL generado con pg_dump
+
+
+
 ## Dependencias
 El proyecto utiliza como base la librería [security](https://github.com/jokoframework/security). Dicha librería se descarga de un artifactory privado que no está versionado, para obtener el enlace contáctanos.
 ## Secret
