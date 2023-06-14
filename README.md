@@ -10,7 +10,7 @@ El proyecto utiliza el siguiente stack tecnológico:
 ## Base de Datos
 En la carpeta **/src/main/resources/** se encuentra el dump (joko-db.sql) de la base de datos que contiene los scripts para la creación de las tablas que utiliza el proyecto. Además en esta carpeta encontrarás el archivo application.properties donde podrás configurar la base de datos a utilizar junto con sus propiedades.
 ## Dependencias
-El proyecto utiliza como base la librería [security](https://github.com/jokoframework/security). Dicha librería se descarga de un artifactory privado que no está versionado, para podes obtener el enlace contáctate con nosotros.
+El proyecto utiliza como base la librería [security](https://github.com/jokoframework/security). Dicha librería se descarga de un artifactory privado que no está versionado, para obtener el enlace contáctanos.
 ## Secret
 El sistema necesita un secreto para firmar los tokens. Este secreto puede ser
 guradado en dos lugares:

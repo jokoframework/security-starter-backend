@@ -1,7 +1,11 @@
 package io.github.jokoframework.securitystarterbackend.services.impl;
 
+import io.github.jokoframework.security.entities.TokenEntity;
+import io.github.jokoframework.security.repositories.ITokenRepository;
 import io.github.jokoframework.security.util.SecurityUtils;
+import io.github.jokoframework.securitystarterbackend.constants.RolEnum;
 import io.github.jokoframework.securitystarterbackend.constants.StatusEnum;
+import io.github.jokoframework.securitystarterbackend.exception.SecurityBackendException;
 import io.github.jokoframework.securitystarterbackend.services.UserService;
 import io.github.jokoframework.securitystarterbackend.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +18,15 @@ import io.github.jokoframework.securitystarterbackend.exception.UserException;
 import io.github.jokoframework.securitystarterbackend.mapper.UserMapper;
 import io.github.jokoframework.securitystarterbackend.repositories.UserRepository;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ITokenRepository tokenRepository;
 
     @Override
     public UserResponseDTO createUser(UserRequestDTO userRequestDTO) throws UserException {
@@ -94,6 +101,13 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public void setLastAccess(UserEntity userEntity) {
+        userEntity.setLastAccess(UserUtils.getCurrentDateTime());
+        userRepository.save(userEntity);
+
+    }
+
     private void updateAttributes(UserEntity existingUserEntity, UserRequestDTO userRequestDTO){
         if(!UserUtils.isEmptyString(userRequestDTO.getUsername())
                 && !userRequestDTO.getUsername().equals(existingUserEntity.getUsername())
@@ -113,6 +127,22 @@ public class UserServiceImpl implements UserService {
 
             //La contraseña se guarda cifrada
             existingUserEntity.setPassword(SecurityUtils.hashPassword(userRequestDTO.getPassword()));
+        }
+    }
+
+    public void checkSession(String secret, RolEnum rol) throws SecurityBackendException {
+        try {
+            String payloadDecoder = UserUtils.jwtPayloadDecoder(secret);
+            List<String> roles = UserUtils.getRolFromJson(payloadDecoder);
+            String accessToken = UserUtils.getAccessTokenFromJson(payloadDecoder);
+            TokenEntity token = tokenRepository.getTokenById(accessToken);
+            if(token.getExpiration().before(new Date())){
+                throw new SecurityBackendException("Error Token expirado");
+            }else if(!roles.contains(rol.name())){
+                throw new SecurityBackendException("Error el usuario no es " + rol);
+            }
+        }catch (Exception err){
+            throw err;
         }
     }
 }

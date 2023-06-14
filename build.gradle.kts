@@ -39,6 +39,10 @@ dependencies {
 
 	//Joko-security dependency
 	implementation("io.github.jokoframework:joko-security:1.1.9")
+
+	implementation ("com.google.code.gson:gson:2.8.8")
+	implementation ("com.auth0:java-jwt:3.18.1")
+
 }
 
 tasks.withType<Test> {

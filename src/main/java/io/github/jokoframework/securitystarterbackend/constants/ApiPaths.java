@@ -13,11 +13,12 @@ public class ApiPaths {
      * routes for user's management
      */
     public static final String USER = API_SECURE + "/user";
-    public static final String CREATE_USER = "/create";
-    public static final String UPDATE_USER = "/update";
-    public static final String DELETE_USER = "/delete";
-    public static final String LIST_USERS = "/list";
-    public static final String GET_USER = LIST_USERS + "/get";
+    public static final String CREATE_USER = USER + "/create";
+    public static final String UPDATE_USER = USER + "/update";
+    public static final String DELETE_USER = USER + "/delete";
+    public static final String LIST_USERS = USER + "/list";
+    public static final String GET_USER = USER + "/get";
+    public static final String CHANGE_USER_STATUS = UPDATE_USER + "/status";
 
 
     /**

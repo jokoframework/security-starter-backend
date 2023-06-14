@@ -6,6 +6,7 @@ public class UserRequestDTO {
     private String email;
     private String password;
 
+
     public String getUsername() {
         return username;
     }

@@ -53,4 +53,12 @@ public class UserException extends BusinessException{
     public void setMessage(String message) {
         this.message = message;
     }
+
+    @Override
+    public String toString() {
+        return "UserException{" +
+                "errorCode='" + errorCode + '\'' +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }
