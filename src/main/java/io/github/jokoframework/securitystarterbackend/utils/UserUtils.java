@@ -1,10 +1,18 @@
 package io.github.jokoframework.securitystarterbackend.utils;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import io.github.jokoframework.securitystarterbackend.constants.ApiConstants;
 import io.github.jokoframework.securitystarterbackend.exception.UserException;
+import org.apache.commons.codec.binary.Base64;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class UserUtils {
@@ -54,5 +62,36 @@ public class UserUtils {
 
     public static Boolean isEmptyString(String val) {
         return val == null || val.isBlank();
+    }
+
+    public static String jwtPayloadDecoder(String jwt){
+        String decodedPayload = null;
+        try {
+            String[] jwtParts = jwt.split("\\.");
+            // Decodificar la carga útil en formato Base64 URL
+            byte[] payloadBytes = Base64.decodeBase64(jwtParts[1]);
+            decodedPayload = new String(payloadBytes, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return decodedPayload;
+    }
+
+    public static List<String> getRolFromJson(String json){
+        JsonElement jsonElement = JsonParser.parseString(json);
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
+        JsonArray rolesArray = jsonObject.getAsJsonObject("joko").getAsJsonArray("roles");
+        List<String> roles = new ArrayList<>();
+        for (int i = 0; i < rolesArray.size(); i++) {
+            roles.add(rolesArray.get(i).getAsString());
+        }
+        return roles;
+    }
+
+    public static String getAccessTokenFromJson(String json){
+        JsonElement jsonElement = JsonParser.parseString(json);
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
+        String accessToken = jsonObject.get("jti").getAsString();
+        return accessToken;
     }
 }

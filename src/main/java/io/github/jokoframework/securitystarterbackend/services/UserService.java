@@ -1,9 +1,11 @@
 package io.github.jokoframework.securitystarterbackend.services;
 
+import io.github.jokoframework.securitystarterbackend.constants.RolEnum;
 import io.github.jokoframework.securitystarterbackend.constants.StatusEnum;
 import io.github.jokoframework.securitystarterbackend.dto.request.UserRequestDTO;
 import io.github.jokoframework.securitystarterbackend.dto.response.UserResponseDTO;
 import io.github.jokoframework.securitystarterbackend.entities.UserEntity;
+import io.github.jokoframework.securitystarterbackend.exception.SecurityBackendException;
 import io.github.jokoframework.securitystarterbackend.exception.UserException;
 
 import java.util.List;
@@ -17,4 +19,6 @@ public interface UserService {
     public void changeUserStatus(Long userId, StatusEnum newStatus) throws UserException;
 
     public UserEntity validateUser(String username, String password) throws UserException;
+    public void setLastAccess(UserEntity userEntity);
+    public void checkSession(String secret, RolEnum rol) throws SecurityBackendException;
 }

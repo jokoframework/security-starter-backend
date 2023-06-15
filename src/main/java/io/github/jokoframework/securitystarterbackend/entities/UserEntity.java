@@ -5,7 +5,9 @@ import io.github.jokoframework.securitystarterbackend.constants.StatusEnum;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "user",schema = "profile")
@@ -14,7 +16,7 @@ public class UserEntity implements Serializable {
     private static final long serialVersionUID = 7662759549802685281L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userid")
+    @Column(name = "user_id")
     private Long userId;
 
     @Column(name = "username")
@@ -39,6 +41,9 @@ public class UserEntity implements Serializable {
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private StatusEnum status;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserRolEntity> roles = new ArrayList<>();
 
     public Long getUserId() {
         return userId;
@@ -96,16 +101,25 @@ public class UserEntity implements Serializable {
         this.status = status;
     }
 
+    public List<UserRolEntity> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<UserRolEntity> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
-        return "User{" +
+        return "UserEntity{" +
                 "userId=" + userId +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", registrationDate=" + creationDate +
-                ", lastAccessDate=" + lastAccess +
+                ", creationDate=" + creationDate +
+                ", lastAccess=" + lastAccess +
                 ", status=" + status +
+                ", roles=" + roles +
                 '}';
     }
 }

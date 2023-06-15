@@ -23,6 +23,7 @@ public class UserResponseDTO extends JokoBaseResponse {
     @JsonProperty
     private StatusEnum status;
 
+
     public String getUsername() {
         return username;
     }

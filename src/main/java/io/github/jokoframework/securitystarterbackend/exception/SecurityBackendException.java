@@ -21,6 +21,6 @@ public class SecurityBackendException extends Exception implements Serializable 
 
     @Override
     public String toString() {
-        return "SecurityBackendException [message=" + message + "]";
+        return "SecurityBackendException = " + message;
     }
 }
